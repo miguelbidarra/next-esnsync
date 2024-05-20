@@ -116,7 +116,7 @@ const Users = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Names</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
