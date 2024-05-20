@@ -1,13 +1,25 @@
+import dbConnect from "../../libs/mongodb";
 import User from "@/app/(models)/User";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
+export async function GET(req) {
+  try {
+    await dbConnect();
+    const users = await User.find().lean().exec();
+    return NextResponse.json(users);
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: "Error", error }, { status: 500 });
+  }
+}
+
 export async function POST(req) {
   try {
+    await dbConnect();
     const body = await req.json();
     const userData = body.formData;
 
-    //Confirm data exists
     if (!userData?.email || !userData.password) {
       return NextResponse.json(
         { message: "All fields are required." },
@@ -15,7 +27,6 @@ export async function POST(req) {
       );
     }
 
-    // check for duplicate emails
     const duplicate = await User.findOne({ email: userData.email })
       .lean()
       .exec();
@@ -29,16 +40,6 @@ export async function POST(req) {
 
     await User.create(userData);
     return NextResponse.json({ message: "User Created." }, { status: 201 });
-  } catch (error) {
-    console.log(err);
-    return NextResponse.json({ message: "Error", error }, { status: 500 });
-  }
-}
-
-export async function GET(req) {
-  try {
-    const users = await User.find().lean().exec();
-    return NextResponse.json(users);
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: "Error", error }, { status: 500 });

@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import {
   Table,
   TableHead,
@@ -50,7 +48,7 @@ const Users = () => {
 
   const handleEditClick = (user) => {
     setSelectedUser(user);
-    setFormData(user);
+    setFormData({ name: user.name, email: user.email });
     setOpen(true);
   };
 
@@ -78,7 +76,6 @@ const Users = () => {
         throw new Error("Failed to delete user");
       }
 
-      // Remove the deleted user from the state
       setUsers(users.filter((user) => user._id !== id));
     } catch (error) {
       console.log("Error deleting user", error);
@@ -104,7 +101,6 @@ const Users = () => {
 
       const updatedUser = await response.json();
 
-      // Update the user in the local state
       setUsers(
         users.map((user) => (user._id === updatedUser._id ? updatedUser : user))
       );
