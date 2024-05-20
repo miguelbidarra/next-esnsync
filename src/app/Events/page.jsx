@@ -49,7 +49,7 @@ const Events = () => {
 
   useEffect(() => {
     fetchEvents();
-  }, [fetchEvents()]);
+  }, []);
 
   const fetchEvents = async () => {
     try {

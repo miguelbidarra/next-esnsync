@@ -82,7 +82,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchEvents();
-  }, [fetchEvents()]);
+  }, []);
 
   const fetchEvents = async () => {
     try {
