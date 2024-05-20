@@ -40,28 +40,30 @@ export const options = {
         },
       },
       async authorize(credentials) {
+        console.log("Authorizing credentials: ", credentials);
         try {
           const foundUser = await User.findOne({ email: credentials.email })
             .lean()
             .exec();
-
           if (foundUser) {
-            console.log("User Exists");
+            console.log("User Exists: ", foundUser);
             const match = await bcrypt.compare(
               credentials.password,
               foundUser.password
             );
-
             if (match) {
-              console.log("Good Pass");
+              console.log("Password match");
               delete foundUser.password;
-
               foundUser["role"] = "Member";
               return foundUser;
+            } else {
+              console.log("Password does not match");
             }
+          } else {
+            console.log("User not found");
           }
         } catch (error) {
-          console.log(error);
+          console.error("Error in authorization: ", error);
         }
         return null;
       },
