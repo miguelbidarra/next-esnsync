@@ -1,8 +1,12 @@
+import dbConnect from "../../lib/mongodb"; // Adjust path if necessary
 import Event from "@/app/(models)/Event";
 import { NextResponse } from "next/server";
 
 export async function handler(req) {
   const { method } = req;
+
+  // Ensure database connection
+  await dbConnect();
 
   switch (method) {
     case 'GET':
@@ -30,23 +34,12 @@ async function createEvent(req) {
     const eventData = body;
 
     // Confirm data exists
-    if (
-      !eventData?.name ||
-      !eventData.description ||
-      !eventData.date ||
-      !eventData.department ||
-      !eventData.location
-    ) {
-      return NextResponse.json(
-        { message: "All fields are required." },
-        { status: 400 }
-      );
+    if (!eventData?.name || !eventData.description || !eventData.date || !eventData.department || !eventData.location) {
+      return NextResponse.json({ message: "All fields are required." }, { status: 400 });
     }
 
     // Check for duplicate events
-    const duplicate = await Event.findOne({ name: eventData.name })
-      .lean()
-      .exec();
+    const duplicate = await Event.findOne({ name: eventData.name }).lean().exec();
 
     if (duplicate) {
       return NextResponse.json({ message: "Duplicate Event" }, { status: 409 });

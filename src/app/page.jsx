@@ -53,14 +53,14 @@ const Home = () => {
     { href: "https://eventupp.eu", text: "ESN Portal" },
     { href: "https://egm-app.click/", text: "EGM App" },
     { href: "https://ga.esn.org/", text: "GA App" },
-    {
-      href: "https://drive.google.com/file/d/140n11LyEW5tzFJog4h0ESVc4znt20pen/view?usp=sharing",
-      text: "Standing Orders",
-    },
-    {
-      href: "https://drive.google.com/file/d/1uZW-axlbzCrgRcfXhFCnlyqlG6ORHcjc/view?usp=sharing",
-      text: "Statutes",
-    },
+    //{
+    //  href: "https://drive.google.com/file/d/140n11LyEW5tzFJog4h0ESVc4znt20pen/view?usp=sharing",
+    //  text: "Standing Orders",
+    //},
+    //{
+    //  href: "https://drive.google.com/file/d/1uZW-axlbzCrgRcfXhFCnlyqlG6ORHcjc/view?usp=sharing",
+    //  text: "Statutes",
+    //},
   ];
 
   const getDepartmentColor = (department) => {
