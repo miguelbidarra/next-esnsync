@@ -11,19 +11,26 @@ const eventSchema = new Schema(
     department: String,
     location: String,
     //budget: ,  // Budget for the event
-    mo: { type: Schema.Types.ObjectId, ref: "MO" },  // Reference to MO
+    mo: { type: Schema.Types.ObjectId, ref: "MO" }, // Reference to MO
     oc: [
       {
         id: { type: Schema.Types.ObjectId, ref: "User" },
         name: String,
       },
     ],
-    status: { type: String, enum: ["Available", "Full"], default: "Available" },  // Status flag
+    status: { type: String, enum: ["Available", "Full"], default: "Available" }, // Status flag
   },
   {
     timestamps: true,
   }
 );
+
+eventSchema.pre("save", function (next) {
+  if (this.oc.length >= 4) {
+    this.status = "Full";
+  }
+  next();
+});
 
 const Event = mongoose.models.Event || mongoose.model("Event", eventSchema);
 

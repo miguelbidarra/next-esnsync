@@ -4,33 +4,31 @@ import { NextResponse } from "next/server";
 
 export async function POST(req, { params }) {
   const { id } = params;
-  console.log(id);
   const { userEmail } = await req.json();
-  console.log(userEmail);
 
   try {
-    // Find the user by email
     const user = await User.findOne({ email: userEmail }).exec();
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // Find the event by ID
     const event = await Event.findById(id).exec();
     if (!event) {
       return NextResponse.json({ message: "Event not found" }, { status: 404 });
     }
 
-    // Check if the user is already in the OC array
-    if (event.oc.some(oc => oc.id.equals(user._id))) {
+    if (event.status === "Full") {
+      return NextResponse.json({ message: "Event is full" }, { status: 400 });
+    }
+
+    if (event.oc.some((oc) => oc.id.equals(user._id))) {
       return NextResponse.json(
         { message: "User already applied" },
         { status: 400 }
       );
     }
 
-    // Add the user to the OC array
-  event.oc.push({ id: user._id, name: user.name });
+    event.oc.push({ id: user._id, name: user.name });
     await event.save();
 
     return NextResponse.json(

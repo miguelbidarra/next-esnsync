@@ -177,13 +177,14 @@ const Events = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to apply to event");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to apply to event");
       }
 
       const result = await response.json();
       console.log(result.message);
 
-      // Optionally update the local state to reflect the applied user
+      // Refresh events to reflect updated status
       fetchEvents();
     } catch (error) {
       console.log("Error applying to event", error);
@@ -280,142 +281,155 @@ const Events = () => {
   return (
     <>
       <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead>
-          <TableRow sx={{ backgroundColor: "#0d47a1" }}>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}></TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              <TableSortLabel
-                active={orderBy === "name"}
-                direction={orderBy === "name" ? order : "asc"}
-                onClick={() => handleRequestSort("name")}
-              >
-                Name
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              <TableSortLabel
-                active={orderBy === "date"}
-                direction={orderBy === "date" ? order : "asc"}
-                onClick={() => handleRequestSort("date")}
-              >
-                Date
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              <TableSortLabel
-                active={orderBy === "department"}
-                direction={orderBy === "department" ? order : "asc"}
-                onClick={() => handleRequestSort("department")}
-              >
-                Department
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              Location
-            </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              Description
-            </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              <TableSortLabel
-                active={orderBy === "status"}
-                direction={orderBy === "status" ? order : "asc"}
-                onClick={() => handleRequestSort("status")}
-              >
-                Status
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              Actions
-            </TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {sortedEvents.map((event) => (
-            <TableRow
-              key={event._id}
-              onClick={() => handleRowClick(event)}
-              sx={{
-                "&:nth-of-type(odd)": { backgroundColor: "#ffffff" },
-              }}
-            >
-              <TableCell>
-                <IconButton
-                  size="small"
-                  color="primary"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleApplyClick(event._id);
-                  }}
-                  sx={{ borderRadius: "20px", textTransform: "none" }}
-                  disabled={event.status === "Full"}
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "#0d47a1" }}>
+              <TableCell
+                sx={{ color: "white", fontWeight: "bold" }}
+              ></TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                <TableSortLabel
+                  active={orderBy === "name"}
+                  direction={orderBy === "name" ? order : "asc"}
+                  onClick={() => handleRequestSort("name")}
                 >
-                  <BackHandIcon />
-                </IconButton>
+                  Name
+                </TableSortLabel>
               </TableCell>
-              <TableCell>{event.name}</TableCell>
-              <TableCell>{event.date}</TableCell>
-              <TableCell>
-                <Chip
-                  label={event.department}
-                  sx={{
-                    backgroundColor: getDepartmentColor(event.department),
-                    color: "white",
-                    fontWeight: "bold",
-                  }}
-                />
-              </TableCell>
-              <TableCell>{event.location}</TableCell>
-              <TableCell>{event.description}</TableCell>
-              <TableCell>
-                <Chip
-                  label={event.status}
-                  sx={{
-                    backgroundColor: getStatusColor(event.status),
-                    color: "white",
-                    fontWeight: "bold",
-                  }}
-                />
-              </TableCell>
-              <TableCell>
-                <IconButton
-                  size="small"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditClick(event);
-                  }}
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                <TableSortLabel
+                  active={orderBy === "date"}
+                  direction={orderBy === "date" ? order : "asc"}
+                  onClick={() => handleRequestSort("date")}
                 >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  color="error"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteClick(event._id);
-                  }}
+                  Date
+                </TableSortLabel>
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                <TableSortLabel
+                  active={orderBy === "department"}
+                  direction={orderBy === "department" ? order : "asc"}
+                  onClick={() => handleRequestSort("department")}
                 >
-                  <DeleteIcon />
-                </IconButton>
-                <IconButton size="small" color="success">
-                  <EuroIcon />
-                </IconButton>
+                  Department
+                </TableSortLabel>
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Location
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Description
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                <TableSortLabel
+                  active={orderBy === "status"}
+                  direction={orderBy === "status" ? order : "asc"}
+                  onClick={() => handleRequestSort("status")}
+                >
+                  Status
+                </TableSortLabel>
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Actions
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+
+          <TableBody>
+            {sortedEvents.map((event) => (
+              <TableRow
+                key={event._id}
+                onClick={() => handleRowClick(event)}
+                sx={{
+                  "&:nth-of-type(odd)": { backgroundColor: "#ffffff" },
+                }}
+              >
+                <TableCell>
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleApplyClick(event._id);
+                    }}
+                    sx={{ borderRadius: "20px", textTransform: "none" }}
+                    disabled={event.status === "Full"}
+                  >
+                    <BackHandIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell>{event.name}</TableCell>
+                <TableCell>{event.date}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={event.department}
+                    sx={{
+                      backgroundColor: getDepartmentColor(event.department),
+                      color: "white",
+                      fontWeight: "bold",
+                    }}
+                  />
+                </TableCell>
+                <TableCell>{event.location}</TableCell>
+                <TableCell>{event.description}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={event.status}
+                    sx={{
+                      backgroundColor: getStatusColor(event.status),
+                      color: "white",
+                      fontWeight: "bold",
+                    }}
+                  />
+                </TableCell>
+                <TableCell>
+                  <IconButton
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(event);
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    color="error"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteClick(event._id);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton size="small" color="success">
+                    <EuroIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       <Modal open={openEditModal} onClose={handleCloseEditModal}>
         <Box
           sx={{
-            position: "flex",
+            margin: "auto", // center the box
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
             bgcolor: "background.paper",
             p: 2,
+            mt: 4,
             borderRadius: "10px",
+            maxWidth: {
+              xs: "xs", // max width on extra small screens
+              sm: "sm", // max width on small screens
+              md: "sm", // max width on medium screens
+              lg: "sm", // max width on large screens
+            },
           }}
         >
           <h2>Edit Event</h2>
@@ -510,10 +524,21 @@ const Events = () => {
       <Modal open={openOcModal} onClose={handleCloseOcModal}>
         <Box
           sx={{
-            position: "flex",
+            margin: "auto", // center the box
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
             bgcolor: "background.paper",
             p: 2,
+            mt: 4,
             borderRadius: "10px",
+            maxWidth: {
+              xs: "xs", // max width on extra small screens
+              sm: "sm", // max width on small screens
+              md: "sm", // max width on medium screens
+              lg: "sm", // max width on large screens
+            },
           }}
         >
           <h2>Organizing Committe</h2>
