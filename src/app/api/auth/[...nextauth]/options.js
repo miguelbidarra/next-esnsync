@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/app/(models)/User";
 import bcrypt from "bcrypt";
 
-export const authOptions = {
+export const options = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
@@ -62,4 +62,4 @@ export const authOptions = {
   },
 };
 
-export default NextAuth(authOptions);
+export default NextAuth(options);
