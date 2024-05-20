@@ -1,4 +1,4 @@
-import dbConnect from "../../lib/mongodb"; // Adjust path if necessary
+import dbConnect from "../../libs/mongodb"; // Adjust path if necessary
 import Event from "@/app/(models)/Event";
 import { NextResponse } from "next/server";
 
