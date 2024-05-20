@@ -1,3 +1,4 @@
+import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/app/(models)/User";
@@ -6,12 +7,12 @@ import bcrypt from "bcrypt";
 export const options = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
       profile(profile) {
         console.log("Profile Google: ", profile);
+
         let userRole = "member";
-        if (profile?.email === "miguelbidarrab@gmail.com") {
+
+        if (profile?.email == "miguelbidarrab@gmail.com") {
           userRole = "admin";
         }
         return {
@@ -20,27 +21,47 @@ export const options = {
           role: userRole,
         };
       },
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+      callbackUrl: "/api/auth/callback/google",
     }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: {
+          label: "email:",
+          type: "text",
+          placeholder: "your-email",
+        },
+        password: {
+          label: "password:",
+          type: "password",
+          placeholder: "your-password",
+        },
       },
       async authorize(credentials) {
         try {
-          // Using lean() to optimize Mongoose query
-          const foundUser = await User.findOne({ email: credentials.email }).lean().exec();
+          const foundUser = await User.findOne({ email: credentials.email })
+            .lean()
+            .exec();
+
           if (foundUser) {
-            const match = await bcrypt.compare(credentials.password, foundUser.password);
+            console.log("User Exists");
+            const match = await bcrypt.compare(
+              credentials.password,
+              foundUser.password
+            );
+
             if (match) {
+              console.log("Good Pass");
               delete foundUser.password;
+
               foundUser["role"] = "Member";
               return foundUser;
             }
           }
         } catch (error) {
-          console.error("Error in authorization: ", error);
+          console.log(error);
         }
         return null;
       },
@@ -61,5 +82,3 @@ export const options = {
     },
   },
 };
-
-export default NextAuth(options);
