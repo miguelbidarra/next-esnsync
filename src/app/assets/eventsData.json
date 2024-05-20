@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Neon Rave",
+    "department": "Activities",
+    "status": "Full",
+    "date": "21/05/24",
+    "description": "A night of neon lights and electronic music night of neon lights and electronic music. night of neon lights and electronic music..",
+    "location": "The Warehouse",
+    "oc": [
+      "Jane Smith",
+      "Alex Rodriguez",
+      "Jessica Lee",
+      "Emily Davis",
+      "Mike Johnson",
+      "Chris Brown"
+    ]
+  },
+  {
+    "name": "Dog Shelter",
+    "department": "Projects",
+    "status": "Available",
+    "date": "27/05/24",
+    "description": "Help build a shelter for stray dogs.",
+    "location": "Central Park",
+    "oc": [
+      "John Doe",
+      "Jane Smith",
+      "Alex Rodriguez",
+      "Jessica Lee",
+      "Emily Davis",
+      "Chris Brown"
+    ]
+  },
+  {
+    "name": "Berlengas Trip",
+    "department": "Cultural",
+    "status": "Full",
+    "date": "12/05/24",
+    "description": "Visit the beautiful Berlengas Islands off the coast of Portugal.",
+    "location": "Lisbon",
+    "oc": [
+      "Jane Smith",
+      "John Doe",
+      "Jessica Lee",
+      "Emily Davis",
+      "Mike Johnson",
+      "Chris Brown"
+    ]
+  }
+]
