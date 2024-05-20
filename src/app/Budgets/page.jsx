@@ -18,7 +18,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CheckIcon from "@mui/icons-material/Check";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
 const Budgets = () => {
   const [budgets, setBudgets] = useState([
@@ -38,13 +38,13 @@ const Budgets = () => {
     );
   };
 
-const editBudget = (id) => {
+  const editBudget = (id) => {
     setBudgets((prevBudgets) =>
-        prevBudgets.map((budget) =>
-            budget.id === id ? { ...budget, status: "For approval" } : budget
-        )
+      prevBudgets.map((budget) =>
+        budget.id === id ? { ...budget, status: "For approval" } : budget
+      )
     );
-};
+  };
 
   return (
     <Grid container spacing={2}>
@@ -76,32 +76,32 @@ const editBudget = (id) => {
         </Stack>
       </Grid>
       <Grid item xs={6}>
-  <Typography variant="h4">Approved</Typography>
-  <Stack spacing={2}>
-    {budgets
-      .filter((budget) => budget.status === "Approved")
-      .map((budget) => (
-        <Card key={budget.id}>
-          <CardContent>
-            <Box display="flex" alignItems="center">
-              <Box flexGrow={1}>
-                <Typography variant="h5">{budget.name}</Typography>
-                <Typography variant="body1">
-                  Total Budget: {budget.totalBudget}
-                </Typography>
-              </Box>
-              <IconButton
-                color="primary"
-                onClick={() => editBudget(budget.id)}
-              >
-                <EditIcon />
-              </IconButton>
-            </Box>
-          </CardContent>
-        </Card>
-      ))}
-  </Stack>
-</Grid>
+        <Typography variant="h4">Approved</Typography>
+        <Stack spacing={2}>
+          {budgets
+            .filter((budget) => budget.status === "Approved")
+            .map((budget) => (
+              <Card key={budget.id}>
+                <CardContent>
+                  <Box display="flex" alignItems="center">
+                    <Box flexGrow={1}>
+                      <Typography variant="h5">{budget.name}</Typography>
+                      <Typography variant="body1">
+                        Total Budget: {budget.totalBudget}
+                      </Typography>
+                    </Box>
+                    <IconButton
+                      color="primary"
+                      onClick={() => editBudget(budget.id)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </Box>
+                </CardContent>
+              </Card>
+            ))}
+        </Stack>
+      </Grid>
       <Grid item xs={12}>
         <Typography variant="h4">All Budgets</Typography>
         <TableContainer component={Paper}>

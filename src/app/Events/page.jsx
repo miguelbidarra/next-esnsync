@@ -20,8 +20,10 @@ import {
   IconButton,
   Chip,
   TableSortLabel,
+  Paper,
   Select,
   MenuItem,
+  TableContainer,
 } from "@mui/material";
 import EuroIcon from "@mui/icons-material/Euro";
 import EditIcon from "@mui/icons-material/Edit";
@@ -277,7 +279,7 @@ const Events = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Events</h1>
+      <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow sx={{ backgroundColor: "#0d47a1" }}>
@@ -405,19 +407,14 @@ const Events = () => {
           ))}
         </TableBody>
       </Table>
+    </TableContainer>
 
       <Modal open={openEditModal} onClose={handleCloseEditModal}>
         <Box
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
+            position: "flex",
             bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
+            p: 2,
             borderRadius: "10px",
           }}
         >
@@ -513,15 +510,9 @@ const Events = () => {
       <Modal open={openOcModal} onClose={handleCloseOcModal}>
         <Box
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
+            position: "flex",
             bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
+            p: 2,
             borderRadius: "10px",
           }}
         >
