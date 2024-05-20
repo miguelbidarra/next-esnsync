@@ -443,7 +443,7 @@ const Home = () => {
                         color="primary"
                         onClick={handleHelpClick}
                       >
-                        I'll help
+                        I will help
                       </Button>
                     </Box>
                   </Box>
