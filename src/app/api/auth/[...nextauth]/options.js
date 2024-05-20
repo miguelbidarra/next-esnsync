@@ -23,7 +23,7 @@ export const options = {
       },
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackUrl: "http://localhost:3000/api/auth/callback/google",
+      callbackUrl: "/api/auth/callback/google",
     }),
     CredentialsProvider({
       name: "Credentials",
