@@ -12,7 +12,7 @@ export const options = {
 
         let userRole = "member";
 
-        if (profile?.email == "miguelbidarrab@gmail.com") {
+        if (profile?.email == "miguelbidarrab@gmail.com" || "pepconde.1993@gmail.com") {
           userRole = "admin";
         }
         return {
