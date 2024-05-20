@@ -167,6 +167,8 @@ const Events = () => {
       return;
     }
 
+    console.log(session);
+
     try {
       const response = await fetch(`/api/events/${eventId}/oc`, {
         method: "POST",
@@ -329,9 +331,11 @@ const Events = () => {
                   Status
                 </TableSortLabel>
               </TableCell>
-              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                Actions
-              </TableCell>
+              {session.data.user.role === "admin" && (
+                <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                  Actions
+                </TableCell>
+              )}
             </TableRow>
           </TableHead>
 
@@ -382,30 +386,32 @@ const Events = () => {
                     }}
                   />
                 </TableCell>
-                <TableCell>
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleEditClick(event);
-                    }}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    color="error"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteClick(event._id);
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton size="small" color="success">
-                    <EuroIcon />
-                  </IconButton>
-                </TableCell>
+                {session.data.user.role === "admin" && (
+                  <TableCell>
+                    <IconButton
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEditClick(event);
+                      }}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteClick(event._id);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                    <IconButton size="small" color="success">
+                      <EuroIcon />
+                    </IconButton>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
