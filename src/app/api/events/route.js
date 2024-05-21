@@ -1,5 +1,5 @@
 import dbConnect from "../../libs/mongodb"; // Adjust path if necessary
-import Event from "@/app/(models)/Event";
+import Event from "./../../(models)/Event";
 import { NextResponse } from "next/server";
 
 export async function handler(req) {
