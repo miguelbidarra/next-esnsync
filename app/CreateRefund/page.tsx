@@ -1,5 +1,5 @@
 import React from "react";
-import RefundForm from "../(components)/RefundForm";
+import RefundForm from "../../components/RefundForm";
 
 const CreateRefund = () => {
   return (
