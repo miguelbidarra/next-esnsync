@@ -1,8 +1,9 @@
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "./../../../(models)/User";
+
 import bcrypt from "bcrypt";
+import User from "../../../../models/User";
 
 export const options = {
   providers: [
@@ -19,11 +20,11 @@ export const options = {
           ...profile,
           id: profile.sub,
           role: userRole,
+          image: profile.image,
         };
       },
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackUrl: "/api/auth/callback/google",
     }),
     CredentialsProvider({
       name: "Credentials",

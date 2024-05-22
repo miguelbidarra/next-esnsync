@@ -1,9 +1,9 @@
 import dbConnect from "../../libs/mongodb";
-import User from "./../../(models)/User";
+import User from "../../../models/User";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
-export async function GET(req) {
+export async function GET() {
   try {
     await dbConnect();
     const users = await User.find().lean().exec();

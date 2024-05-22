@@ -81,26 +81,40 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const findNextEvent = (events) => {
+      const upcomingEvents = events.filter(
+        (event) => new Date(event.date) >= new Date()
+      );
+      if (upcomingEvents.length > 0) {
+        const next = upcomingEvents.reduce((earliest, current) =>
+          new Date(current.date) < new Date(earliest.date) ? current : earliest
+        );
+        setNextEvent(next);
+        calculateDaysUntilNextEvent(next.date);
+      }
+    };
+
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/events", {
+          cache: "no-cache",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch events");
+        }
+        const data = await response.json();
+        setEvents(data);
+        calculateEventCounts(data);
+        findNextEvent(data);
+        findAvailableEvents(data);
+      } catch (error) {
+        console.log("Error loading events", error);
+      }
+    };
+
     fetchEvents();
   }, []);
 
-  const fetchEvents = async () => {
-    try {
-      const response = await fetch("/api/events", {
-        cache: "no-cache",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch events");
-      }
-      const data = await response.json();
-      setEvents(data);
-      calculateEventCounts(data);
-      findNextEvent(data);
-      findAvailableEvents(data);
-    } catch (error) {
-      console.log("Error loading events", error);
-    }
-  };
 
   const calculateEventCounts = (events) => {
     const counts = {
@@ -117,18 +131,7 @@ const Home = () => {
     setEventCounts(counts);
   };
 
-  const findNextEvent = (events) => {
-    const upcomingEvents = events.filter(
-      (event) => new Date(event.date) >= new Date()
-    );
-    if (upcomingEvents.length > 0) {
-      const next = upcomingEvents.reduce((earliest, current) =>
-        new Date(current.date) < new Date(earliest.date) ? current : earliest
-      );
-      setNextEvent(next);
-      calculateDaysUntilNextEvent(next.date);
-    }
-  };
+
 
   const calculateDaysUntilNextEvent = (eventDate) => {
     const currentDate = new Date();

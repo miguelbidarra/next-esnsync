@@ -1,6 +1,7 @@
-import Event from "@/app/(models)/Event";
-import User from "@/app/(models)/User";
+
 import { NextResponse } from "next/server";
+import User from "../../../../../models/User";
+import Event from "../../../../../models/Event";
 
 export async function POST(req, { params }) {
   const { id } = params;

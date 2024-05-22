@@ -1,6 +1,6 @@
-import AuthProvider from "./(components)/AuthProvider";
-import Nav from "./(components)/Nav";
 import "./globals.css";
+import Nav from "../components/Nav";
+import AuthProvider from "../components/AuthProvider";
 
 export const metadata = {
   title: "ESNsync - Next",

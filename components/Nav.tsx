@@ -23,7 +23,6 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddIcon from "@mui/icons-material/Add";
 import EuroIcon from "@mui/icons-material/Euro";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import logo from "./../assets/esnstar.png";
 
 const Nav = () => {
   const { data: session, status } = useSession();
@@ -86,6 +85,10 @@ const Nav = () => {
     </Box>
   );
 
+  const logo = '/images/esnstar.png'
+  const imgSize = 75;
+  const logoSize = 30;
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -98,7 +101,7 @@ const Nav = () => {
                 my: 2,
               }}
             >
-              <Image src={logo} alt="ESNsync Logo" width={75} />
+              <Image src={logo} alt="ESNsync Logo" width={imgSize} height={imgSize} />
             </Box>
 
             <List>
@@ -163,7 +166,7 @@ const Nav = () => {
                 mr: 2,
               }}
             >
-              <Image src={logo} alt="ESNsync Logo" width={30} />
+              <Image src={logo} alt="ESNsync Logo" width={logoSize} height={logoSize} />
             </Box>
 
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
