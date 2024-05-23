@@ -53,21 +53,21 @@ const Member = () => {
                   </Box>
                 </ListItemText>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <ListItemText>
                   <Box sx={{ color: "text.secondary" }}>Role</Box>
                   <Box sx={{ color: "text.primary", fontSize: 16 }}>
                     {session?.user?.role}
                   </Box>
                 </ListItemText>
-              </ListItem>
+              </ListItem> */}
             </List>
           </CardContent>
           <CardActions sx={{ justifyContent: "center" }}>
             <Button
               variant="contained"
               color="primary"
-              component={Link} 
+              component={Link}
               href={"/api/auth/signout?callbackUrl=/"}
               onClick={() => redirect("/api/auth/signout?callbackUrl=/")}
             >

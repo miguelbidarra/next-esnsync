@@ -1,8 +1,8 @@
-import dbConnect from "../../libs/mongodb"; // Adjust path if necessary
-import Event from '../../../models/Event'; // Adjust path if necessary
+import dbConnect from "../../libs/mongodb";
+import Event from '../../../models/Event';
 import { NextResponse } from "next/server";
 
-export async function handler(req) {
+const handler = async (req) => {
   const { method } = req;
 
   // Ensure database connection
