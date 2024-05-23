@@ -14,7 +14,6 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "bcrypt": "^5.1.1",
-    "mongodb": "^6.6.2",
     "mongoose": "^8.3.5",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
@@ -22,7 +21,10 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "20.12.12",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "typescript": "^5.4.5"
   }
 }
