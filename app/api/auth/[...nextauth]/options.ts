@@ -4,10 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import bcrypt from "bcrypt";
 import User from "../../../../models/User";
-import NextAuthConfig from 'next-auth';
-
-
-
+import NextAuthConfig from "next-auth";
 
 // type Token = { role: string };
 // type User = { role: string };
@@ -23,25 +20,25 @@ import NextAuthConfig from 'next-auth';
 
 export const options = {
   pages: {
-    signIn: 'login',
+    signIn: "login",
   },
   providers: [
     GoogleProvider({
       profile(profile) {
         console.log("Profile Google: ", profile);
 
-        // if (profile?.email == "miguelbidarrab@gmail.com" || "pepconde.1993@gmail.com") {
+        // if (profile?.email == "admin@example.com") {
         //   userRole = "admin";
         // }
         return {
           ...profile,
           id: profile.sub,
-          role: 'member',
+          role: "member",
           image: profile.image,
         };
       },
-      clientId: process.env.GOOGLE_ID || '',
-      clientSecret: process.env.GOOGLE_SECRET || '',
+      clientId: process.env.GOOGLE_ID || "",
+      clientSecret: process.env.GOOGLE_SECRET || "",
     }),
     // CredentialsProvider({
     //   name: "Credentials",
@@ -88,9 +85,8 @@ export const options = {
     // }),
   ],
   callbacks: {
-
     /**
-     *@todo - rewrite this part  
+     *@todo - rewrite this part
      */
     // async signIn({ user, account, profile }) {
     //   console.log('Sign in: ', user, account, profile);
